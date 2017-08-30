@@ -1,0 +1,88 @@
+# Package generated configuration file
+# See the sshd_config(5) manpage for details
+
+# What ports, IPs and protocols we listen for
+Port {{ ssh_Port }}
+# Use these options to restrict which interfaces/protocols sshd will bind to
+#ListenAddress ::
+#ListenAddress 0.0.0.0
+Protocol {{ ssh_Protocol }}
+# HostKeys for protocol version 2
+HostKey {{ ssh_HostKey_rsa }}
+HostKey {{ ssh_HostKey_dsa }}
+HostKey {{ ssh_HostKey_ecdsa }}
+HostKey {{ ssh_HostKey_ed25519 }}
+#Privilege Separation is turned on for security
+UsePrivilegeSeparation {{ ssh_UsePrivilegeSeparation }}
+
+# Lifetime and size of ephemeral version 1 server key
+KeyRegenerationInterval {{ ssh_KeyRegenerationInterval }}
+ServerKeyBits {{ ssh_ServerKeyBits }}
+
+# Logging
+SyslogFacility {{ ssh_SyslogFacility }}
+LogLevel {{ ssh_LogLevel }}
+
+# Authentication:
+LoginGraceTime {{ ssh_LoginGraceTime }}
+PermitRootLogin {{ ssh_PermitRootLogin }}
+StrictModes {{ ssh_StrictModes }}
+
+RSAAuthentication {{ ssh_RSAAuthentication }}
+PubkeyAuthentication {{ ssh_PubkeyAuthentication }}
+#AuthorizedKeysFile	%h/.ssh/authorized_keys
+
+# Don't read the user's ~/.rhosts and ~/.shosts files
+IgnoreRhosts {{ ssh_IgnoreRhosts }}
+# For this to work you will also need host keys in /etc/ssh_known_hosts
+RhostsRSAAuthentication {{ ssh_RhostsRSAAuthentication }}
+# similar for protocol version 2
+HostbasedAuthentication {{ ssh_HostbasedAuthentication }}
+# Uncomment if you don't trust ~/.ssh/known_hosts for RhostsRSAAuthentication
+#IgnoreUserKnownHosts yes
+
+# To enable empty passwords, change to yes (NOT RECOMMENDED)
+PermitEmptyPasswords {{ ssh_PermitEmptyPasswords }}
+
+# Change to yes to enable challenge-response passwords (beware issues with
+# some PAM modules and threads)
+ChallengeResponseAuthentication {{ ssh_ChallengeResponseAuthentication }}
+
+# Change to no to disable tunnelled clear text passwords
+#PasswordAuthentication yes
+
+# Kerberos options
+#KerberosAuthentication no
+#KerberosGetAFSToken no
+#KerberosOrLocalPasswd yes
+#KerberosTicketCleanup yes
+
+# GSSAPI options
+#GSSAPIAuthentication no
+#GSSAPICleanupCredentials yes
+
+X11Forwarding {{ ssh_X11Forwarding }}
+X11DisplayOffset {{ ssh_X11DisplayOffset }}
+PrintMotd {{ ssh_PrintMotd }}
+PrintLastLog {{ ssh_PrintLastLog }}
+TCPKeepAlive {{ ssh_TCPKeepAlive }}
+#UseLogin no
+
+#MaxStartups 10:30:60
+#Banner /etc/issue.net
+
+# Allow client to pass locale environment variables
+AcceptEnv {{ ssh_AcceptEnv }}
+
+Subsystem {{ ssh_Subsystem }}
+
+# Set this to 'yes' to enable PAM authentication, account processing,
+# and session processing. If this is enabled, PAM authentication will
+# be allowed through the ChallengeResponseAuthentication and
+# PasswordAuthentication.  Depending on your PAM configuration,
+# PAM authentication via ChallengeResponseAuthentication may bypass
+# the setting of "PermitRootLogin without-password".
+# If you just want the PAM account and session checks to run without
+# PAM authentication, then enable this but set PasswordAuthentication
+# and ChallengeResponseAuthentication to 'no'.
+UsePAM {{ ssh_UsePAM }}

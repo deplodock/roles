@@ -1,0 +1,21 @@
+---
+- name: Install openssh server
+  apt:
+    name: openssh-server
+    state: {{ ssh_state }}
+
+- name: Configure openssh server
+  template:
+    src: ssh_config.jinja2
+    dest: {{ ssh_config_file }}
+  notify: restart ssh
+
+- name: Read ssh server pubkey
+  vars:
+    ssh_pubkey: "{{ lookup('file', ssh_HostKey_rsa + '.pub') }}"
+  when: ssh_store_server_key is defined and ssh_store_server_key
+
+- name: Store server pubkey to "{{ inventory_name }}"
+  set_fact:
+    state: {{ lookup('dk_set', inventory_name, '/host/' + inventory_hostname + '/host_vars/ssh_server_key', ssh_pubkey) }}
+  when: ssh_store_server_key is defined and ssh_store_server_key
